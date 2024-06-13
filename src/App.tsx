@@ -1,6 +1,8 @@
 import TransactionForm from './Components/TransactionForm/TransactionForm';
 import {useState} from 'react';
 import {Transaction} from './type';
+import TransactionCard from './Components/TransactionCard/TransactionCard';
+import Navbar from './Components/Navbar/Navbar';
 
 const App = () => {
   const [transaction, setTransaction] = useState<Transaction[]>([
@@ -27,27 +29,19 @@ const App = () => {
 
   return (
     <>
-      <nav className="navbar bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">Navbar</a>
-        </div>
-      </nav>
+      <Navbar/>
       <div className="container pt-5 mb-3">
         <TransactionForm onSubmit={addTransaction}/>
       </div>
       <div className="container pt-5 d-flex flex-column gap-2">
         {transaction.map((transaction) => (
-          <div className="card" key={transaction.id}>
-            <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center">
-                <span>{transaction.name}</span>
-                <div className="d-flex gap-3 align-items-center">
-                  <strong>{transaction.amount}</strong>
-                  <button className="btn btn-danger" onClick={() => removeTransaction(transaction.id)}>Delete</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <TransactionCard
+            key={transaction.id}
+            id={transaction.id}
+            name={transaction.name}
+            amount={transaction.amount}
+            removeTransaction={removeTransaction}
+          />
         ))}
       </div>
       <div className="container pt-5">
